@@ -99,7 +99,7 @@
   </main>
   <footer>
     <form method="post">
-      <input type="text" name="wybId" />
+      <input type="number" name="wybId" />
       <button>Pokaż opis</button>
       <?php
       if (isset($_POST["wybId"])) {
