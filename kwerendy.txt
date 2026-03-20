@@ -1,0 +1,4 @@
+SELECT gry.id, gry.nazwa, gry.zdjecie FROM `gry`;
+SELECT gry.nazwa, LEFT(gry.opis, 100) opis,gry.punkty, gry.cena FROM gry WHERE id = 1;
+SELECT gry.nazwa, gry.punkty FROM `gry` ORDER BY gry.punkty DESC LIMIT 5;
+INSERT INTO `gry`(`nazwa`, `opis`, `punkty`, `cena`, `zdjecie`) VALUES ('Zamczysko','Na odludziu stoi opuszczone zamczysko, w którym znajduje się skarb strzeżony przez złowrogie demony i duchy',200,50,'zamczysko.jpg');
