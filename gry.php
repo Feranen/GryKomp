@@ -75,21 +75,25 @@
         <label for="opis">opis</label>
         <input id="opis" name="opis" type="text" />
         <label for="cena">cena</label>
-        <input id="cena" name="cena" type="text" />
+        <input id="cena" name="cena" type="number" />
         <label for="zdjecie">zdjęcie</label>
         <input id="zdjecie" name="zdjecie" type="text" />
         <button type="submit">DODAJ</button>
         <?php
-        $conn = mysqli_connect($servername, $username, $password, $dbname);
-        if (isset($_POST["nazwa"]) && isset($_POST["opis"]) && isset($_POST["cena"]) && isset($_POST["zdjecie"])) {
-          $query = "SELECT gry.nazwa, LEFT(gry.opis, 100) opis,gry.punkty, gry.cena FROM gry WHERE id = '{$wybId}';";
+        if (isset($_POST["nazwa"])) {
+          $conn = mysqli_connect($servername, $username, $password, $dbname);
+          $nazwa = $_POST['nazwa'];
+          $opis = $_POST['opis'];
+          $cena = $_POST['cena'];
+          $zd = $_POST['zdjecie'];
+          $query = "INSERT INTO `gry`(`nazwa`, `opis`, `punkty`, `cena`, `zdjecie`) VALUES ('{$nazwa}','{$opis}',0,'{$cena}','{$zd}');";
           $result = mysqli_query($conn, $query);
+          mysqli_close($conn);
+          $_POST = [];
 
+          header("Location: " . $_SERVER['PHP_SELF']);
         }
-
-        mysqli_close($conn);
         ?>
-
       </form>
     </aside>
   </main>
@@ -98,6 +102,17 @@
       <input type="text" name="wybId" />
       <button>Pokaż opis</button>
       <?php
+      if (isset($_POST["wybId"])) {
+        $conn = mysqli_connect($servername, $username, $password, $dbname);
+        $wybId = $_POST["wybId"];
+        $query = "SELECT gry.nazwa, LEFT(gry.opis, 100) opis,gry.punkty, gry.cena FROM gry WHERE id = '{$wybId}';";
+        $result = mysqli_query($conn, $query);
+        $row = mysqli_fetch_array($result);
+        echo "<h2>{$row["nazwa"]}, {$row['punkty']} punktów, {$row['cena']} zł</h2>";
+        echo "<p>{$row['opis']}</p>";
+
+        mysqli_close($conn);
+      }
       ?>
     </form>
   </footer>
